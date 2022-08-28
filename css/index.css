@@ -1,0 +1,152 @@
+.icon {
+    width: 150px;
+    padding: 15px;
+}
+
+input {
+    padding: 9px;
+}
+
+p {
+    color: rgb(31, 69, 101);
+}
+
+li {
+    font-size: 30px;
+    border: brown 1px solid;
+    padding: 6px;
+}
+
+/* .site-background {
+    background-color: darkcyan;
+} */
+
+.red {
+    text-align: center;
+    color: red;
+    display: inline-block;
+}
+
+.my-calculator .result-calculation {
+    width: 250px;
+    text-align: center;
+    margin: 20px auto;
+    padding: 15px;
+    color: rgb(85, 8, 76);
+    font-size: 30px;
+    border: brown 1px solid;
+    border-radius: 15px;
+
+}
+
+.green {
+    text-align: center;
+    color: rgb(85, 8, 76);
+}
+
+.hello-world h1 {
+    width: 300px;
+    font-size: 50px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.inputs-block .input-block label{
+    color: rgb(85, 8, 76);
+    font-size: 30px;
+    display: block;
+    padding: 5px;
+}
+
+.inputs-block .input-block {
+    width: 160px;
+    display: inline-block;
+    padding: 10px;
+}
+
+.inputs-block .input-block input{
+    width: 160px;
+    font-size: 25px;
+    padding: 5px;
+    border-radius: 15px;
+}
+/* .current-time {
+    width: 200px;
+    text-align: center;
+    background-color: azure;
+    color: red;
+    font-size: 30px;
+    border: brown 1px solid;
+    border-radius: 15px;
+} */
+
+
+#ppp6565 {
+    width: 250px;
+    margin: 0 auto;
+    color: rgb(85, 8, 76);
+    font-size: 30px;
+    border: brown 1px solid;
+    padding: 15px;
+    border-radius: 15px;
+}
+.whitebackgroundcolor{
+    background-color: whitesmoke;
+
+}
+
+.my-calculator {
+    width: 500px;
+    background-color: azure;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid rgb(105, 135, 85);
+    border-radius: 25px;
+}
+
+.my-calculator .operations-block .operation-block button {
+    width: 80px;
+    font-size: 20px;
+    height: 40px;
+    margin: 20px;
+    border-radius: 10px;
+
+}
+
+.whitebackgroundcolor{
+    background-color: whitesmoke;
+
+}
+.block-canvas{
+    text-align: center;
+
+}
+#c1{
+    border: 5px solid rgb(60, 116, 195);
+    margin: 40px auto;
+    background: url('http://w3.org.ua/images/js/setka.png') 
+}
+.rrrr {
+    color: rgb(106, 112, 120);
+    color: rgb(105, 135, 85);
+    color: rgb(193, 190, 57);
+    color: rgb(213, 179, 54);
+    color: rgb(206, 178, 22);
+    color: rgb(199, 180, 72);
+    color: rgb(198, 222, 16);
+    color: rgb(194, 218, 58);
+    color: rgb(211, 202, 29);
+    color: rgb(233, 222, 15);
+    color: rgb(38, 190, 142);
+    color: rgb(80, 185, 151);
+    color: rgb(43, 124, 175);
+    color: rgb(16, 96, 146);
+    color: rgb(16, 51, 146);
+    color: rgb(9, 34, 101);
+    color: rgb(99, 39, 124);
+    color: rgb(76, 15, 103);
+    color: rgb(123, 41, 114);
+    color: rgb(85, 8, 76);
+    color: rgb(255, 255, 255);
+}
