@@ -616,7 +616,7 @@ gameManager = function () {
         for (let i = 0; i < this.food.foodvolume.length; i++) {
             let x1 = this.food.foodvolume[i].getX() * this.food.radiusoffoodportion;
             let y1 = this.food.foodvolume[i].getY() * this.food.radiusoffoodportion;
-            ctx.drawImage(this.foodimage, x1, y1, this.food.radiusoffoodportion, this.food.radiusoffoodportion);
+            ctx.drawImage(this.foodimage, x1, y1, Math.floor(this.food.radiusoffoodportion/1.4), this.food.radiusoffoodportion);
         };
         //poison
         for (let i = 0; i < this.poison.poisonvolume.length; i++) {
