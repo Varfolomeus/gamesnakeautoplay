@@ -23,25 +23,22 @@ for (let i = 0; i < operationButtons.length; i++) {
 function onButtonclick(eventObject) {
     var clickdElement = eventObject.currentTarget;
     var whatoperation = clickdElement.innerHTML;
-    calculateRezult(whatoperation);
+    gameControls(whatoperation);
 }
-function calculateRezult(operation) {
-    var number1 = Number(input1.value);
-    var number2 = Number(input2.value);
-    var rezult;
+function gameControls(operation) {
+
     switch (operation) {
         case "Start": that.gameStart(); break;
         case "Pause": that.gamover = !that.gamover; break;
         case "Play": that.continiousgame(); break;
         case "Step": that.move(); break;
     }
-//    document.getElementById("rezultPlace").innerHTML = rezult;
+    //    document.getElementById("rezultPlace").innerHTML = rezult;
 }
 //-----------canvas-------------------
 var canvas = document.getElementById("c1");
 var ctx = canvas.getContext('2d');
-ctx.fillStyle = 'red';
-ctx.fillRect(100, 50, 100, 50);
+
 
 //------------Snake-------------------
 let that = null;
@@ -62,27 +59,13 @@ PointOfField = function (xcc, ycc, colorofpointfield) {
     this.setColor = function (color) {
         this.pointColor = color;
     }
-}
+};
 
 food = function () {
     this.foodcolor = "#EB3F8F";
     this.foodvolume = [];
     this.radiusoffoodportion = that.cellsize;
     this.foodEaten = false;
-
-    this.addfoodonstart = function () {
-        let x = 0;
-        let y = 0;
-        this.foodvolume = [];
-        for (let i = 0; i < that.foodstartvolume; i++) {
-            do {
-                x = Math.floor(Math.random() * that.gameWidth);
-                y = Math.floor(Math.random() * that.gameHeight);
-                var tempfood = new PointOfField(x, y, this.foodcolor);
-            } while (that.isFood(x, y) || that.isSnake(x, y));
-            this.foodvolume.push(tempfood);
-        };
-    };
     this.addFood = function () {
         let x = 0;
         let y = 0;
@@ -90,7 +73,7 @@ food = function () {
             x = Math.floor(Math.random() * that.gameWidth);
             y = Math.floor(Math.random() * that.gameHeight);
             var tempfood = new PointOfField(x, y, this.foodcolor);
-        } while (that.isFood(x, y) || that.isSnake(x, y));
+        } while (that.isFood(x, y) || that.isSnake(x, y)|| that.isPoison());
         this.foodvolume.push(tempfood);
     };
 };
@@ -101,19 +84,6 @@ poison = function () {
     this.radiusofpoisonportion = that.cellsize;
     this.poisonEaten = false;
 
-    this.addPoisononstart = function () {
-        let x = 0;
-        let y = 0;
-        this.poisonvolume = [];
-        for (let i = 0; i < that.poisonstartvolume; i++) {
-            do {
-                x = Math.floor(Math.random() * that.gameWidth);
-                y = Math.floor(Math.random() * that.gameHeight);
-                var temppoison = new PointOfField(x, y, this.poisonColor);
-            } while (that.isFood(x, y) || that.isSnake(x, y) || that.isPoison(x, y));
-            this.poisonvolume.push(temppoison);
-        };
-    };
     this.addPoison = function () {
         let x = 0;
         let y = 0;
@@ -141,24 +111,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
         this.snakeBody = [];
         for (let i = 0; i < this.startSnakeLength; i++) {
             this.snakeBody.push(new PointOfField(this.headX - i, this.headY, this.headColor));
-            // ctx.fillRect((this.headX + i)*10, this.headY*10, 8, 8);
-            let x1 = (this.headX - i) * this.cellBodysize;
-            let y1 = this.headY * this.cellBodysize;
-            let radiusofSnakebodysegment = Math.floor((this.cellBodysize - 2) / 2);
-            let my_gradient = null;
-            my_gradient = ctx.createRadialGradient(x1, y1, 0, x1, y1, radiusofSnakebodysegment)
-            my_gradient.addColorStop(0, this.headColor);
-            my_gradient.addColorStop(1, "white");
-            ctx.fillStyle = my_gradient;
-            ctx.beginPath();
-            ctx.arc(x1, y1, radiusofSnakebodysegment, 0, 2 * Math.PI, true);
-            ctx.fill();
-
-            //         ctx.stroke();
-            //this.snakeBody.push ("tttttttttttttttttttttt");
-            //this.snakeBody[i]= new this.PointOfField();
         }
-    }
+    };
     this.calculateDirection = function (Snaketocalkdir, numofsntocalcdir) {
         let x1 = Snaketocalkdir.headX;
         let y1 = Snaketocalkdir.headY;
@@ -580,11 +534,12 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
             Snaketocalkdir.rightEyevalue = 0;
             return Snaketocalkdir.snakeDirection;
         };
-    }
+    };
 };
 
 gameManager = function () {
     this.startSnakeLength = 6;
+    this.maxSnakeLength = 12;
     this.startSnakeNumber = 0;
     this.startX = 4;
     this.cellsize = 10;
@@ -599,7 +554,7 @@ gameManager = function () {
     this.showmessages = false;
     this.gamover = false;
     this.step = 1;
-    this.eaten=0;
+    this.eaten = 0;
     this.foodvalue = 100;
     this.poisonvalue = -100;
     this.bodyvalue = -100;
@@ -621,38 +576,90 @@ gameManager = function () {
         let y1 = this.startY;
         document.getElementById('rezultPlace').innerHTML = "0 <br> Peace"
         this.startQuantityOfSnakes = Number(document.getElementById('input1').value);
-        this.gamepause = (Math.floor(10000/Number(document.getElementById('input2').value)) <20)? 20: Math.floor(10000/Number(document.getElementById('input2').value)) ;
-        for (let i1 = 0; i1 < this.startQuantityOfSnakes; i1++) {
-            if (i1 % 4 === 0) {
-                fillColor = 'rgb(0, 0, 255)';
-            }
-            if (i1 % 4 === 1) {
-                fillColor = 'rgb(0, 255, 0)';
-            }
-            if (i1 % 4 === 2) {
-                fillColor = 'rgb(255, 0, 255)';
-            }
-            if (i1 % 4 === 3) {
-                fillColor = 'rgb(0, 255, 255)';
-            }
-            this.snakesonfield.push(new SnakeObject(this.startSnakeLength, x1, y1+i1, this.startDirection, fillColor, this.cellsize));
-            this.snakesonfield[i1].generateBody();
-            ;
-        }
+        this.gamepause = (Math.floor(10000 / Number(document.getElementById('input2').value)) < 20) ? 20 : Math.floor(10000 / Number(document.getElementById('input2').value));
         this.food = new food();
         this.poison = new poison();
-        this.food.addfoodonstart();
-        this.poison.addPoisononstart();
+        this.food.foodvolume=[];
+        this.poison.poisonvolume=[];
+        this.checkandaddsnakes();
+        this.checkandaddconsumables();
+        this.renderpicture();
+    };
 
-        //       this.continiousgame();
+    this.renderpicture = function () {
+        // image render
+        // clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //snakes
+        for (let ii = 0; ii < this.snakesonfield.length; ii++) {
+            for (let j = 0; j < this.snakesonfield[ii].snakeBody.length; j++) {
+                let x1 = this.snakesonfield[ii].snakeBody[j].getX() * this.snakesonfield[ii].cellBodysize;
+                let y1 = this.snakesonfield[ii].snakeBody[j].getY() * this.snakesonfield[ii].cellBodysize;
+                let radiusofSnakebodysegment = Math.floor((this.snakesonfield[ii].cellBodysize - 2) / 2);
+                let my_gradient = null;
+                my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusofSnakebodysegment)
+                my_gradient.addColorStop(0, this.snakesonfield[ii].headColor);
+                my_gradient.addColorStop(1, "white");
+                ctx.fillStyle = my_gradient;
+                ctx.beginPath();
+                ctx.arc(x1, y1, radiusofSnakebodysegment, 0, 2 * Math.PI, true);
+                ctx.fill();
+            }
+        }
+        //food
+        for (let i = 0; i < this.food.foodvolume.length; i++) {
+            let x1 = this.food.foodvolume[i].getX() * this.food.radiusoffoodportion;
+            let y1 = this.food.foodvolume[i].getY() * this.food.radiusoffoodportion;
+            let radiusoffoodsegment = Math.floor((this.food.radiusoffoodportion - 2) / 2);
+            let my_gradient = null;
+            my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusoffoodsegment)
+            my_gradient.addColorStop(0, this.food.foodcolor);
+            my_gradient.addColorStop(1, "white");
+            ctx.fillStyle = my_gradient;
+            ctx.beginPath();
+            ctx.arc(x1, y1, radiusoffoodsegment, 0, 2 * Math.PI, true);
+            ctx.fill();
+        };
+        //poison
+        for (let i = 0; i < this.poison.poisonvolume.length; i++) {
+            let x1 = this.poison.poisonvolume[i].getX() * this.poison.radiusofpoisonportion;
+            let y1 = this.poison.poisonvolume[i].getY() * this.poison.radiusofpoisonportion;
+            let radiusofpoisonsegment = Math.floor((this.poison.radiusofpoisonportion - 2) / 2);
+            let my_gradient = null;
+            my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusofpoisonsegment)
+            my_gradient.addColorStop(0, this.poison.poisonColor);
+            my_gradient.addColorStop(1, "white");
+            ctx.fillStyle = my_gradient;
+            ctx.beginPath();
+            ctx.arc(x1, y1, radiusofpoisonsegment, 0, 2 * Math.PI, true);
+            ctx.fill();
+        };
+        //game subtotals and other results on web page
+        document.getElementById('rezultPlace').innerHTML = "" + this.eaten + ((this.fight === 1) ? "<br>Peace" : "<br>Fight");
     };
 
     this.continiousgame = function () {
         setInterval(() => {
             this.move();
         }, this.gamepause);
-
     };
+    
+    this.checkandaddsnakes = function () {
+        while (this.snakesonfield.length < this.startQuantityOfSnakes) {
+            let fillColor = 'rgb(' + (1+Math.floor(Math.random() * 255)) + ',' + (1+Math.floor(Math.random() * 255)) + ',' + (1+Math.floor(Math.random() * 255)) + ')';
+//            let fillColor = 'rgb(' + 1 + ',' + 200 + ',' + 1 + ')';
+
+            let x = 0;
+            let y = 0;
+            do {
+                x = Math.floor(Math.random() * that.gameWidth);
+                y = Math.floor(Math.random() * that.gameHeight);
+            } while (that.isFood(x, y) || that.isSnake(x, y) || that.isPoison(x, y));
+            this.snakesonfield.push(new SnakeObject(this.startSnakeLength, x, y, this.startDirection, fillColor, this.cellsize));
+            this.snakesonfield[(this.snakesonfield.length - 1)].generateBody();
+        };
+    }
+
     this.isFood = function (x, y) {
         for (let i = 0; i < this.food.foodvolume.length; i++) {
             let x1 = this.food.foodvolume[i].getX();
@@ -670,15 +677,16 @@ gameManager = function () {
     };
 
     this.isEnemy = function (x, y, numofsnaketocompare) {
-        for (let i = 0; i < this.snakesonfield.length; i++) {                
+        for (let i = 0; i < this.snakesonfield.length; i++) {
             if (i != numofsnaketocompare) {
                 for (let j = 0; j < this.snakesonfield[i].snakeBody.length; j++) {
                     let x1 = this.snakesonfield[i].snakeBody[j].getX();
                     let y1 = this.snakesonfield[i].snakeBody[j].getY();
                     if (x === x1 && y === y1) return true;
-                }
+                };
             };
-        }; return false;
+        }; 
+        return false;
     };
 
     this.isSnake = function (x, y) {
@@ -691,25 +699,31 @@ gameManager = function () {
         };
         return false;
     };
+
     this.isPoison = function (x, y) {
         for (let i = 0; i < this.poison.poisonvolume.length; i++) {
             let x1 = this.poison.poisonvolume[i].getX();
             let y1 = this.poison.poisonvolume[i].getY();
             if (x === x1 && y === y1) return true;
-        }; return false;
+        }; 
+        return false;
     };
-    this.killenemy = function (x, y) {
+
+    this.killenemy = function (x, y, numofattackingsnake) {
         for (let i = 0; i < this.snakesonfield.length; i++) {
-            for (let j = 0; j < this.snakesonfield[i].snakeBody.length; j++) {
-                let x1 = this.snakesonfield[i].snakeBody[j].getX();
-                let y1 = this.snakesonfield[i].snakeBody[j].getY();
-                if (x === x1 && y === y1) {
-                    this.snakesonfield.splice(i, 1);
-                    return;
+            if (i != numofattackingsnake) {
+                for (let j = 0; j < this.snakesonfield[i].snakeBody.length; j++) {
+                    let x1 = this.snakesonfield[i].snakeBody[j].getX();
+                    let y1 = this.snakesonfield[i].snakeBody[j].getY();
+                    if (x === x1 && y === y1) {
+                        this.snakesonfield.splice(i, 1);
+                        return;
+                    };
                 };
             };
         };
-    }
+    };
+
     this.eatFood = function (x, y) {
         for (let i = 0; i < this.food.foodvolume.length; i++) {
             let x1 = this.food.foodvolume[i].getX();
@@ -719,8 +733,9 @@ gameManager = function () {
                 that.eaten++;
                 return;
             };
-        }
+        };
     };
+
     this.startfight = function () {
         for (let i = 0; i < this.snakesonfield.length; i++) {
             if (this.snakesonfield[i].snakeBody.length >= this.snakefighterlength) {
@@ -729,6 +744,7 @@ gameManager = function () {
         };
         return false;
     };
+
     this.eatPoison = function (x, y) {
         for (let i = 0; i < this.poison.poisonvolume.length; i++) {
             let x1 = this.poison.poisonvolume[i].getX();
@@ -737,127 +753,58 @@ gameManager = function () {
                 this.poison.poisonvolume.splice(i, 1);
                 return;
             };
+        };
+    };
+
+    this.checkandaddconsumables = function () {
+        while (this.poison.poisonvolume.length < this.poisonstartvolume) {
+            this.poison.addPoison();
+        }
+        while (this.food.foodvolume.length < this.foodstartvolume) {
+            this.food.addFood();
         }
     };
+
     this.move = function () {
-        let newsnakey = this.startY;
         if (!this.gamover) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let ii = 0; ii < this.snakesonfield.length; ii++) {
                 let x1 = this.snakesonfield[ii].headX;
                 let y1 = this.snakesonfield[ii].headY;
-                let dir = this.snakesonfield[ii].snakeDirection;
-                dir = this.snakesonfield[ii].calculateDirection(this.snakesonfield[ii], ii);
+                let dir = this.snakesonfield[ii].calculateDirection(this.snakesonfield[ii], ii);
                 if (dir === that.Updir) { y1 = (y1 - this.step + that.gameHeight) % that.gameHeight; };
                 if (dir === that.Rightdir) { x1 = (x1 + this.step + that.gameWidth) % that.gameWidth; };
                 if (dir === that.Downdir) { y1 = (y1 + this.step + that.gameHeight) % that.gameHeight; };
                 if (dir === that.Leftdir) { x1 = (x1 - this.step + that.gameWidth) % that.gameWidth; };
                 this.snakesonfield[ii].headX = x1;
                 this.snakesonfield[ii].headY = y1;
+
                 if (this.isSnakeItself(x1, y1, ii)) {
                     this.snakesonfield.splice(ii, 1);
-                   // return;
                 };
-                while (this.snakesonfield.length < this.startQuantityOfSnakes) {
-                    let fillColor = null;
-                    if ((ii + 1) % 4 === 0) {
-                        fillColor = 'rgb(0, 0, 255)';
-                    } else if ((ii + 1) % 4 === 1) {
-                        fillColor = 'rgb(0, 255, 0)';
-                    } else if ((ii + 1) % 4 === 2) {
-                        fillColor = 'rgb(255, 0, 255)';
-                    } else if ((ii + 1) % 4 === 3) {
-                        fillColor = 'rgb(0, 255, 255)';
-                    }
-                    this.snakesonfield.push(new SnakeObject(this.startSnakeLength, Math.floor(Math.random()*this.gameWidth), newsnakey, this.startDirection, fillColor, this.cellsize));
-                    newsnakey+=10;
-                    this.snakesonfield[(this.snakesonfield.length-1)].generateBody();
-                }
+                //move snake
                 this.snakesonfield[ii].snakeBody.unshift(new PointOfField(x1, y1, this.snakesonfield[ii].headColor));
-                this.snakesonfield[ii].snakeBody = this.snakesonfield[ii].snakeBody.slice(0, -1);
+
                 if (this.isFood(x1, y1)) {
                     this.eatFood(x1, y1);
-                    this.snakesonfield[ii].snakeBody.unshift(new PointOfField(x1, y1, this.snakesonfield[ii].headColor));
-                    while (this.food.foodvolume.length <= this.foodstartvolume) {
-                        this.food.addFood();
-                    }
+                } else {
+                    this.snakesonfield[ii].snakeBody = this.snakesonfield[ii].snakeBody.slice(0, -1);
                 };
+
                 if (this.isPoison(x1, y1)) {
                     this.eatPoison(x1, y1);
                     this.snakesonfield.splice(ii, 1);
-                    while (this.poison.poisonvolume.length <= this.poisonstartvolume) {
-                        this.poison.addPoison();
-                    }
                 };
 
                 if (this.isEnemy(x1, y1, ii)) {
-                    this.killenemy(x1, y1);
-                    let fillColor = null;
-                    while (this.snakesonfield.length < this.startQuantityOfSnakes) {
-                        if ((ii + 1) % 4 === 0) {
-                            fillColor = 'rgb(0, 0, 255)';
-                        } else if ((ii + 1) % 4 === 1) {
-                            fillColor = 'rgb(0, 255, 0)';
-                        } else if ((ii + 1) % 4 === 2) {
-                            fillColor = 'rgb(255, 0, 255)';
-                        } else if ((ii + 1) % 4 === 3) {
-                            fillColor = 'rgb(0, 255, 255)';
-                        }
-                        this.snakesonfield.push(new SnakeObject(this.startSnakeLength, Math.floor(Math.random()*this.gameWidth), newsnakey, this.startDirection, fillColor, this.cellsize));
-                        newsnakey+=10;
-                        this.snakesonfield[(this.snakesonfield.length-1)].generateBody();
-                    }
+                    this.killenemy(x1, y1, ii);
                 };
-            }
-            if (newsnakey > Math.floor(this.gameHeight / 2)) {
-                newsnakey = this.gameHeight;
             };
+            this.checkandaddconsumables();
+            this.checkandaddsnakes();
             if (this.startfight()) {
                 this.fight = -1;
             } else this.fight = 1;
-    
-            for (let ii = 0; ii < this.snakesonfield.length; ii++) {
-                for (let j = 0; j < this.snakesonfield[ii].snakeBody.length; j++) {
-                    let x1 = this.snakesonfield[ii].snakeBody[j].getX() * this.snakesonfield[ii].cellBodysize;
-                    let y1 = this.snakesonfield[ii].snakeBody[j].getY() * this.snakesonfield[ii].cellBodysize;
-                    let radiusofSnakebodysegment = Math.floor((this.snakesonfield[ii].cellBodysize - 2) / 2);
-                    let my_gradient = null;
-                    my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusofSnakebodysegment)
-                    my_gradient.addColorStop(0, this.snakesonfield[ii].headColor);
-                    my_gradient.addColorStop(1, "white");
-                    ctx.fillStyle = my_gradient;
-                    ctx.beginPath();
-                    ctx.arc(x1, y1, radiusofSnakebodysegment, 0, 2 * Math.PI, true);
-                    ctx.fill();
-                }
-            }
-            for (let i = 0; i < this.food.foodvolume.length; i++) {
-                let x1 = this.food.foodvolume[i].getX() * this.food.radiusoffoodportion;
-                let y1 = this.food.foodvolume[i].getY() * this.food.radiusoffoodportion;
-                let radiusoffoodsegment = Math.floor((this.food.radiusoffoodportion - 2) / 2);
-                let my_gradient = null;
-                my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusoffoodsegment)
-                my_gradient.addColorStop(0, this.food.foodcolor);
-                my_gradient.addColorStop(1, "white");
-                ctx.fillStyle = my_gradient;
-                ctx.beginPath();
-                ctx.arc(x1, y1, radiusoffoodsegment, 0, 2 * Math.PI, true);
-                ctx.fill();
-            };
-            for (let i = 0; i < this.poison.poisonvolume.length; i++) {
-                let x1 = this.poison.poisonvolume[i].getX() * this.poison.radiusofpoisonportion;
-                let y1 = this.poison.poisonvolume[i].getY() * this.poison.radiusofpoisonportion;
-                let radiusofpoisonsegment = Math.floor((this.poison.radiusofpoisonportion - 2) / 2);
-                let my_gradient = null;
-                my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusofpoisonsegment)
-                my_gradient.addColorStop(0, this.poison.poisonColor);
-                my_gradient.addColorStop(1, "white");
-                ctx.fillStyle = my_gradient;
-                ctx.beginPath();
-                ctx.arc(x1, y1, radiusofpoisonsegment, 0, 2 * Math.PI, true);
-                ctx.fill();
-            };
-            document.getElementById('rezultPlace').innerHTML = "" + this.eaten + ((this.fight === 1) ? "<br>Peace" : "<br>Fight");
+            this.renderpicture()
         };
     };
 
@@ -871,6 +818,6 @@ gameManager = function () {
         return cloneObject;
     };
     that = this;
-}
+};
 
 let NewSnakeGame = new gameManager();
