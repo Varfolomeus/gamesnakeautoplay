@@ -29,7 +29,7 @@ function gameControls(operation) {
 
     switch (operation) {
         case "Start": that.gameStart(); break;
-        case "Pause": that.gamover = !that.gamover; break;
+        case "Pause": that.gameover = !that.gameover; break;
         case "Play": that.continiousgame(); break;
         case "Step": that.move(); break;
     }
@@ -126,18 +126,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * j + 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -148,18 +137,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -170,50 +148,11 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * j + 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
-            let lYV = Snaketocalkdir.leftEyevalue;
-            let fYV = Snaketocalkdir.frontEyevalue;
-            let rYV = Snaketocalkdir.rightEyevalue;
-            if (lYV === 0 && fYV === 0 && rYV === 0) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + (Math.floor(Math.random() * 3) - 1) + 4) % 4;
-            }
-            if (lYV > fYV && lYV === rYV) {
-                let variationofturn = Math.floor(Math.random() * 2);
-                if (variationofturn === 0) {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-                } else {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-                }
-            }
-            if (fYV > lYV && fYV == rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > rYV && fYV == lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > lYV && fYV > rYV) {
-                // without any changes -----------
-            }
-            if (lYV > fYV && lYV > rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-            }
-            if (rYV > fYV && rYV > lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-            }
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -230,18 +169,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j + 1 + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -252,18 +180,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * j + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -274,50 +191,11 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * j + 1 + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
-            let lYV = Snaketocalkdir.leftEyevalue;
-            let fYV = Snaketocalkdir.frontEyevalue;
-            let rYV = Snaketocalkdir.rightEyevalue;
-            if (lYV === 0 && fYV === 0 && rYV === 0) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + (Math.floor(Math.random() * 3) - 1) + 4) % 4;
-            }
-            if (lYV > fYV && lYV === rYV) {
-                let variationofturn = Math.floor(Math.random() * 2);
-                if (variationofturn === 0) {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-                } else {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-                }
-            }
-            if (fYV > lYV && fYV == rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > rYV && fYV == lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > lYV && fYV > rYV) {
-                // without any changes -----------
-            }
-            if (lYV > fYV && lYV > rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-            }
-            if (rYV > fYV && rYV > lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-            }
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -334,18 +212,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * j - 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -356,18 +223,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * j + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+
                     ii++;
                 }
             }
@@ -378,50 +235,11 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * j - 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
-            let lYV = Snaketocalkdir.leftEyevalue;
-            let fYV = Snaketocalkdir.frontEyevalue;
-            let rYV = Snaketocalkdir.rightEyevalue;
-            if (lYV === 0 && fYV === 0 && rYV === 0) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + (Math.floor(Math.random() * 3) - 1) + 4) % 4;
-            }
-            if (lYV > fYV && lYV === rYV) {
-                let variationofturn = Math.floor(Math.random() * 2);
-                if (variationofturn === 0) {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-                } else {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-                }
-            }
-            if (fYV > lYV && fYV == rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > rYV && fYV == lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > lYV && fYV > rYV) {
-                // without any changes -----------
-            }
-            if (lYV > fYV && lYV > rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-            }
-            if (rYV > fYV && rYV > lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-            }
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -438,18 +256,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * j - 1 + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -460,18 +267,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * j + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -482,50 +278,12 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j - 1 + that.gameHeight) % that.gameHeight;
-                    if (that.isEnemy(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.fight * that.othersnakevalue;
-                    };
-                    if (that.isSnakeItself(xn1, yn1, numofsntocalcdir)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.bodyvalue;
-                    };
-                    if (that.isFood(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.foodvalue;
-                    };
-                    if (that.isPoison(xn1, yn1)) {
-                        Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.poisonvalue;
-                    };
+                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+
                     ii++;
                 }
             }
-            let lYV = Snaketocalkdir.leftEyevalue;
-            let fYV = Snaketocalkdir.frontEyevalue;
-            let rYV = Snaketocalkdir.rightEyevalue;
-            if (lYV === 0 && fYV === 0 && rYV === 0) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + (Math.floor(Math.random() * 3) - 1) + 4) % 4;
-            }
-            if (lYV > fYV && lYV === rYV) {
-                let variationofturn = Math.floor(Math.random() * 2);
-                if (variationofturn === 0) {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-                } else {
-                    Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-                }
-            }
-            if (fYV > lYV && fYV == rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > rYV && fYV == lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - Math.floor(Math.random() * 2) + 4) % 4;
-            }
-            if (fYV > lYV && fYV > rYV) {
-                // without any changes -----------
-            }
-            if (lYV > fYV && lYV > rYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection - 1 + 4) % 4;
-            }
-            if (rYV > fYV && rYV > lYV) {
-                Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + 1 + 4) % 4;
-            }
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -541,6 +299,7 @@ gameManager = function () {
     this.startSnakeLength = 6;
     this.maxSnakeLength = 12;
     this.startSnakeNumber = 0;
+    this.maxsSnakeNumber=40;
     this.startX = 4;
     this.cellsize = 10;
     this.gameWidth = canvas.width / this.cellsize;
@@ -552,7 +311,7 @@ gameManager = function () {
     this.Downdir = 3;
     this.eyeDepth = 5;
     this.showmessages = false;
-    this.gamover = false;
+    this.gameover = false;
     this.step = 1;
     this.eaten = 0;
     this.foodvalue = 100;
@@ -565,7 +324,7 @@ gameManager = function () {
     this.foodimage.src = this.foodimageurl;
     this.poisonimage=new Image();
     this.poisonimage.src = this.poisonimageurl;
-    this.snakefighterlength = 19;
+    this.snakefighterlength = 10;
     this.foodstartvolume = 100;
     this.poisonstartvolume = 10;
     this.othersnakevalue = - 100;
@@ -577,9 +336,6 @@ gameManager = function () {
     this.eyevalues = [0.707, 1.0, 0.707, 0.353, 0.447, 0.5, 0.447, 0.353, 0.235, 0.277, 0.316, 0.333, 0.316, 0.277, 0.235, 0.176, 0.2, 0.223, 0.242, 0.25, 0.242, 0.223, 0.2, 0.176, 0.141, 0.156, 0.171, 0.185, 0.196, 0.2, 0.196, 0.185, 0.171, 0.156, 0.141, 0.117, 0.128, 0.138, 0.149, 0.158, 0.164, 0.166, 0.164, 0.158, 0.149, 0.138, 0.128, 0.117, 0.101, 0.108, 0.116, 0.124, 0.131, 0.137, 0.141, 0.142, 0.141, 0.137, 0.131, 0.124, 0.116, 0.108, 0.101, 0.088, 0.094, 0.1, 0.105, 0.111, 0.117, 0.121, 0.124, 0.125, 0.124, 0.121, 0.117, 0.111, 0.105, 0.1, 0.094, 0.088, 0.078, 0.083, 0.087, 0.092, 0.097, 0.101, 0.105, 0.108, 0.11, 0.111, 0.11, 0.108, 0.105, 0.101, 0.097, 0.092, 0.087, 0.083, 0.078, 0.07, 0.074, 0.078, 0.081, 0.085, 0.089, 0.092, 0.095, 0.098, 0.099, 0.1, 0.099, 0.098, 0.095, 0.092, 0.089, 0.085, 0.081, 0.078, 0.074, 0.07, 0.064, 0.067, 0.07, 0.073, 0.076, 0.079, 0.082, 0.085, 0.087, 0.089, 0.09, 0.09, 0.09, 0.089, 0.087, 0.085, 0.082, 0.079, 0.076, 0.073, 0.07, 0.067, 0.064, 0.058, 0.061, 0.064, 0.066, 0.069, 0.071, 0.074, 0.076, 0.079, 0.08, 0.082, 0.083, 0.083, 0.083, 0.082, 0.08, 0.079, 0.076, 0.074, 0.071, 0.069, 0.066, 0.064, 0.061, 0.058, 0.054, 0.056, 0.058, 0.06, 0.063, 0.065, 0.067, 0.069, 0.071, 0.073, 0.074, 0.076, 0.076, 0.076, 0.076, 0.076, 0.074, 0.073, 0.071, 0.069, 0.067, 0.065, 0.063, 0.06, 0.058, 0.056, 0.054, 0.05, 0.052, 0.054, 0.056, 0.058, 0.06, 0.062, 0.063, 0.065, 0.067, 0.068, 0.069, 0.07, 0.071, 0.071, 0.071, 0.07, 0.069, 0.068, 0.067, 0.065, 0.063, 0.062, 0.06, 0.058, 0.056, 0.054, 0.052, 0.05, 0.047, 0.048, 0.05, 0.052, 0.053, 0.055, 0.057, 0.058, 0.06, 0.061, 0.063, 0.064, 0.065, 0.066, 0.066, 0.066, 0.066, 0.066, 0.065, 0.064, 0.063, 0.061, 0.06, 0.058, 0.057, 0.055, 0.053, 0.052, 0.05, 0.048, 0.047];
 
     this.gameStart = function () {
-        let fillColor = null;
-        let x1 = this.startX;
-        let y1 = this.startY;
         document.getElementById('rezultPlace').innerHTML = "0 <br> Peace"
         this.startQuantityOfSnakes = Number(document.getElementById('input1').value);
         this.gamepause = (Math.floor(10000 / Number(document.getElementById('input2').value)) < 20) ? 20 : Math.floor(10000 / Number(document.getElementById('input2').value));
@@ -633,7 +389,78 @@ gameManager = function () {
             this.move();
         }, this.gamepause);
     };
-    
+
+    this.isgameover = function () {
+        let countcolors = [];
+        let flip = false;
+        if (this.snakesonfield.length < 2) {
+            return true;
+        };
+        for (let i = 0; i < this.snakesonfield.length; i++) {
+            if (i < 1) {
+                countcolors.push(this.snakesonfield[i].headColor);
+            };
+            for (j = 0; j < countcolors.length; j++) {
+                if (countcolors[j] === this.snakesonfield[i].headColor) {
+                    flip = true;
+                };
+            }
+            if (!flip) {
+                countcolors.push(this.snakesonfield[i].headColor);
+                
+            };
+            flip = false;
+        }; if (this.snakesonfield.length > this.maxsSnakeNumber && countcolors.length < 2) {
+            document.getElementById('rezultPlace').innerHTML = "Game Over<br>" + this.eaten + ((this.fight === 1) ? "<br>Peace" : "<br>Fight");
+            let alerttext = "Game over! On game field "+ this.maxsSnakeNumber +" or more snakes with one color, and no snakes with other color.";
+            alert(alerttext);
+            return true;
+        }
+        return false;
+    };
+
+    this.changedirection = function (lv, fv, rv){
+        if (lv === 0 && fv === 0 && rv === 0) {
+            return (Math.floor(Math.random() * 3) - 1);
+        } else if (lv > fv && lv === rv) {
+            let variationofturn = Math.floor(Math.random() * 2);
+            if (variationofturn === 0) {
+                return - 1;
+            } else {
+                return  1;}
+        } else
+        if (fv > lv && fv == rv) {
+            return Math.floor(Math.random() * 2);
+        }  else
+        if (fv > rv && fv == lv) {
+            return -Math.floor(Math.random() * 2);
+        } else
+        if (fv > lv && fv > rv) {
+            return 0;
+        } else
+        if (lv > fv && lv > rv) {
+            return - 1;
+        } else
+        if (rv > fv && rv > lv) {
+            return 1;
+        };
+    };
+
+    this.checkeyevalue = function (xc, yc, nc) {
+        if (that.isFood(xc, yc)) {
+            return that.foodvalue;
+        } else if (that.isNotEnemy(xc, yc, nc)) {
+            return that.othersnakevalue;
+        } else if (that.isSnakeItself(xc, yc, nc)) {
+            return that.bodyvalue;
+        } else if (that.isEnemy(xc, yc, nc)) {
+            return that.fight * that.othersnakevalue;
+        } else if (that.isPoison(xc, yc)) {
+            return that.poisonvalue;
+        };
+        return 0;
+    };
+
     this.checkandaddsnakes = function () {
         while (this.snakesonfield.length < this.startQuantityOfSnakes) {
             let fillColor = 'rgb(' + (1+Math.floor(Math.random() * 255)) + ',' + (1+Math.floor(Math.random() * 255)) + ',' + (1+Math.floor(Math.random() * 255)) + ')';
@@ -672,7 +499,20 @@ gameManager = function () {
                 for (let j = 0; j < this.snakesonfield[i].snakeBody.length; j++) {
                     let x1 = this.snakesonfield[i].snakeBody[j].getX();
                     let y1 = this.snakesonfield[i].snakeBody[j].getY();
-                    if (x === x1 && y === y1) return true;
+                    if (x === x1 && y === y1 && this.snakesonfield[numofsnaketocompare].headColor != this.snakesonfield[i].headColor) return true;
+                };
+            };
+        }; 
+        return false;
+    };
+
+    this.isNotEnemy = function (x, y, numofsnaketocompare) {
+        for (let i = 0; i < this.snakesonfield.length; i++) {
+            if (i != numofsnaketocompare) {
+                for (let j = 0; j < this.snakesonfield[i].snakeBody.length; j++) {
+                    let x1 = this.snakesonfield[i].snakeBody[j].getX();
+                    let y1 = this.snakesonfield[i].snakeBody[j].getY();
+                    if (x === x1 && y === y1 && this.snakesonfield[numofsnaketocompare].headColor === this.snakesonfield[i].headColor) return true;
                 };
             };
         }; 
@@ -726,6 +566,14 @@ gameManager = function () {
         };
     };
 
+    this.snakepregnantwillborn = function(pregnantsnake, numberofpregnantsnake){
+        let snaketemptobeborn= new SnakeObject(Math.floor(pregnantsnake.snakeBody.length/2)+1, pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length-1)].getX(), pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length-1)].getY(), ((pregnantsnake.snakeDirection+2+4)%4), pregnantsnake.headColor, pregnantsnake.cellBodysize);
+        snaketemptobeborn.snakeBody = pregnantsnake.snakeBody.slice(this.startSnakeLength,-1);
+        snaketemptobeborn.snakeBody.reverse();
+        this.snakesonfield.push(snaketemptobeborn);
+        pregnantsnake.snakeBody.splice(this.startSnakeLength, (pregnantsnake.snakeBody.length-this.startSnakeLength-1));
+    };
+
     this.startfight = function () {
         for (let i = 0; i < this.snakesonfield.length; i++) {
             if (this.snakesonfield[i].snakeBody.length >= this.snakefighterlength) {
@@ -756,7 +604,7 @@ gameManager = function () {
     };
 
     this.move = function () {
-        if (!this.gamover) {
+        if (!this.gameover) {
             for (let ii = 0; ii < this.snakesonfield.length; ii++) {
                 let x1 = this.snakesonfield[ii].headX;
                 let y1 = this.snakesonfield[ii].headY;
@@ -767,24 +615,24 @@ gameManager = function () {
                 if (dir === that.Leftdir) { x1 = (x1 - this.step + that.gameWidth) % that.gameWidth; };
                 this.snakesonfield[ii].headX = x1;
                 this.snakesonfield[ii].headY = y1;
-
                 if (this.isSnakeItself(x1, y1, ii)) {
                     this.snakesonfield.splice(ii, 1);
                 };
                 //move snake
                 this.snakesonfield[ii].snakeBody.unshift(new PointOfField(x1, y1, this.snakesonfield[ii].headColor));
-
                 if (this.isFood(x1, y1)) {
                     this.eatFood(x1, y1);
+                    if (this.snakesonfield[ii].snakeBody.length>=this.maxSnakeLength){
+                        this.snakesonfield[ii].snakeBody = this.snakesonfield[ii].snakeBody.slice(0, -1);
+                        this.snakepregnantwillborn( this.snakesonfield[ii] ,ii);
+                    };
                 } else {
                     this.snakesonfield[ii].snakeBody = this.snakesonfield[ii].snakeBody.slice(0, -1);
                 };
-
                 if (this.isPoison(x1, y1)) {
                     this.eatPoison(x1, y1);
                     this.snakesonfield.splice(ii, 1);
                 };
-
                 if (this.isEnemy(x1, y1, ii)) {
                     this.killenemy(x1, y1, ii);
                 };
@@ -794,7 +642,8 @@ gameManager = function () {
             if (this.startfight()) {
                 this.fight = -1;
             } else this.fight = 1;
-            this.renderpicture()
+            this.renderpicture();
+            this.gameover= this.isgameover() ;
         };
     };
 
