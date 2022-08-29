@@ -559,6 +559,12 @@ gameManager = function () {
     this.poisonvalue = -100;
     this.bodyvalue = -100;
     this.gamepause = 100;
+    this.foodimageurl = "./images/food.png";
+    this.poisonimageurl = "./images/poison.png";
+    this.foodimage=new Image();
+    this.foodimage.src = this.foodimageurl;
+    this.poisonimage=new Image();
+    this.poisonimage.src = this.poisonimageurl;
     this.snakefighterlength = 19;
     this.foodstartvolume = 100;
     this.poisonstartvolume = 10;
@@ -610,29 +616,13 @@ gameManager = function () {
         for (let i = 0; i < this.food.foodvolume.length; i++) {
             let x1 = this.food.foodvolume[i].getX() * this.food.radiusoffoodportion;
             let y1 = this.food.foodvolume[i].getY() * this.food.radiusoffoodportion;
-            let radiusoffoodsegment = Math.floor((this.food.radiusoffoodportion - 2) / 2);
-            let my_gradient = null;
-            my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusoffoodsegment)
-            my_gradient.addColorStop(0, this.food.foodcolor);
-            my_gradient.addColorStop(1, "white");
-            ctx.fillStyle = my_gradient;
-            ctx.beginPath();
-            ctx.arc(x1, y1, radiusoffoodsegment, 0, 2 * Math.PI, true);
-            ctx.fill();
+            ctx.drawImage(this.foodimage, x1, y1, this.food.radiusoffoodportion, this.food.radiusoffoodportion);
         };
         //poison
         for (let i = 0; i < this.poison.poisonvolume.length; i++) {
             let x1 = this.poison.poisonvolume[i].getX() * this.poison.radiusofpoisonportion;
             let y1 = this.poison.poisonvolume[i].getY() * this.poison.radiusofpoisonportion;
-            let radiusofpoisonsegment = Math.floor((this.poison.radiusofpoisonportion - 2) / 2);
-            let my_gradient = null;
-            my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusofpoisonsegment)
-            my_gradient.addColorStop(0, this.poison.poisonColor);
-            my_gradient.addColorStop(1, "white");
-            ctx.fillStyle = my_gradient;
-            ctx.beginPath();
-            ctx.arc(x1, y1, radiusofpoisonsegment, 0, 2 * Math.PI, true);
-            ctx.fill();
+            ctx.drawImage(this.poisonimage, x1, y1, this.food.radiusoffoodportion, this.food.radiusoffoodportion);
         };
         //game subtotals and other results on web page
         document.getElementById('rezultPlace').innerHTML = "" + this.eaten + ((this.fight === 1) ? "<br>Peace" : "<br>Fight");
