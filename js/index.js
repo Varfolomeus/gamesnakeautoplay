@@ -567,8 +567,8 @@ gameManager = function () {
     };
 
     this.snakepregnantwillborn = function (pregnantsnake, numberofpregnantsnake) {
-        let snaketemptobeborn = new SnakeObject(Math.floor(pregnantsnake.snakeBody.length / 2) + 1, pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length - 1)].getX(), pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length - 1)].getY(), ((pregnantsnake.snakeDirection + 2 + 4) % 4), pregnantsnake.headColor, pregnantsnake.cellBodysize);
-        snaketemptobeborn.snakeBody = pregnantsnake.snakeBody.slice(this.startSnakeLength, -1);
+        let snaketemptobeborn = new SnakeObject(this.startSnakeLength, pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length - 1)].getX(), pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length - 1)].getY(), ((pregnantsnake.snakeDirection + 2 + 4) % 4), pregnantsnake.headColor, pregnantsnake.cellBodysize);
+        snaketemptobeborn.snakeBody = pregnantsnake.snakeBody.slice(pregnantsnake.snakeBody.length-this.startSnakeLength-1,);
         snaketemptobeborn.snakeBody.reverse();
         this.snakesonfield.push(snaketemptobeborn);
         pregnantsnake.snakeBody.splice(this.startSnakeLength, (pregnantsnake.snakeBody.length - this.startSnakeLength - 1));
