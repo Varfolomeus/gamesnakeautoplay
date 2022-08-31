@@ -73,7 +73,7 @@ food = function () {
             x = Math.floor(Math.random() * that.gameWidth);
             y = Math.floor(Math.random() * that.gameHeight);
             var tempfood = new PointOfField(x, y, this.foodcolor);
-        } while (that.isFood(x, y) || that.isSnake(x, y)|| that.isPoison());
+        } while (that.isFood(x, y) || that.isSnake(x, y) || that.isPoison());
         this.foodvolume.push(tempfood);
     };
 };
@@ -83,7 +83,6 @@ poison = function () {
     this.poisonvolume = [];
     this.radiusofpoisonportion = that.cellsize;
     this.poisonEaten = false;
-
     this.addPoison = function () {
         let x = 0;
         let y = 0;
@@ -126,7 +125,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * j + 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -137,7 +136,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -148,11 +147,11 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * j + 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
-            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -169,7 +168,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j + 1 + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -180,7 +179,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * j + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -191,11 +190,11 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * j + 1 + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
-            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -212,7 +211,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * j - 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -223,7 +222,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * j + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
 
                     ii++;
                 }
@@ -235,11 +234,11 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * j - 1 + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
-            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -256,7 +255,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 + that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * j - 1 + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.leftEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -267,7 +266,7 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * j + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.frontEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
                 }
             }
@@ -278,12 +277,12 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     let eyevalueforcalculation = that.eyevalues[ii];
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j - 1 + that.gameHeight) % that.gameHeight;
-                    Snaketocalkdir.rightEyevalue +=eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
+                    Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
 
                     ii++;
                 }
             }
-            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue )+4)%4;
+            Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
             }
@@ -299,7 +298,7 @@ gameManager = function () {
     this.startSnakeLength = 6;
     this.maxSnakeLength = 12;
     this.startSnakeNumber = 0;
-    this.maxsSnakeNumber=40;
+    this.maxsSnakeNumber = 40;
     this.startX = 4;
     this.cellsize = 10;
     this.gameWidth = canvas.width / this.cellsize;
@@ -320,9 +319,9 @@ gameManager = function () {
     this.gamepause = 100;
     this.foodimageurl = "./images/food.png";
     this.poisonimageurl = "./images/poison.png";
-    this.foodimage=new Image();
+    this.foodimage = new Image();
     this.foodimage.src = this.foodimageurl;
-    this.poisonimage=new Image();
+    this.poisonimage = new Image();
     this.poisonimage.src = this.poisonimageurl;
     this.snakefighterlength = 10;
     this.foodstartvolume = 100;
@@ -341,8 +340,8 @@ gameManager = function () {
         this.gamepause = (Math.floor(10000 / Number(document.getElementById('input2').value)) < 20) ? 20 : Math.floor(10000 / Number(document.getElementById('input2').value));
         this.food = new food();
         this.poison = new poison();
-        this.food.foodvolume=[];
-        this.poison.poisonvolume=[];
+        this.food.foodvolume = [];
+        this.poison.poisonvolume = [];
         this.checkandaddsnakes();
         this.checkandaddconsumables();
         this.renderpicture();
@@ -359,9 +358,9 @@ gameManager = function () {
                 let y1 = this.snakesonfield[ii].snakeBody[j].getY() * this.snakesonfield[ii].cellBodysize;
                 let radiusofSnakebodysegment = Math.floor((this.snakesonfield[ii].cellBodysize - 2) / 2);
                 let my_gradient = null;
-                my_gradient = ctx.createRadialGradient(x1, y1, 1, x1, y1, radiusofSnakebodysegment)
-                my_gradient.addColorStop(0, this.snakesonfield[ii].headColor);
-                my_gradient.addColorStop(1, "white");
+                my_gradient = ctx.createRadialGradient(x1+Math.floor(((Math.random()*2)-1)*(radiusofSnakebodysegment/2)), y1+Math.floor(((Math.random())*2-1)*(radiusofSnakebodysegment/2)), 1, x1, y1, radiusofSnakebodysegment)
+                my_gradient.addColorStop(1, this.snakesonfield[ii].headColor);
+                my_gradient.addColorStop(0, "white");
                 ctx.fillStyle = my_gradient;
                 ctx.beginPath();
                 ctx.arc(x1, y1, radiusofSnakebodysegment, 0, 2 * Math.PI, true);
@@ -372,13 +371,13 @@ gameManager = function () {
         for (let i = 0; i < this.food.foodvolume.length; i++) {
             let x1 = this.food.foodvolume[i].getX() * this.food.radiusoffoodportion;
             let y1 = this.food.foodvolume[i].getY() * this.food.radiusoffoodportion;
-            ctx.drawImage(this.foodimage, x1, y1, Math.floor(this.food.radiusoffoodportion/1.4), this.food.radiusoffoodportion);
+            ctx.drawImage(this.foodimage, x1 - this.food.radiusoffoodportion / 2, y1 - this.food.radiusoffoodportion / 2, Math.floor(this.food.radiusoffoodportion / 1.4), this.food.radiusoffoodportion);
         };
         //poison
         for (let i = 0; i < this.poison.poisonvolume.length; i++) {
             let x1 = this.poison.poisonvolume[i].getX() * this.poison.radiusofpoisonportion;
             let y1 = this.poison.poisonvolume[i].getY() * this.poison.radiusofpoisonportion;
-            ctx.drawImage(this.poisonimage, x1, y1, this.food.radiusoffoodportion, this.food.radiusoffoodportion);
+            ctx.drawImage(this.poisonimage, x1 - this.poison.radiusofpoisonportion / 2, y1 - this.poison.radiusofpoisonportion / 2, this.food.radiusoffoodportion, this.food.radiusoffoodportion);
         };
         //game subtotals and other results on web page
         document.getElementById('rezultPlace').innerHTML = "" + this.eaten + ((this.fight === 1) ? "<br>Peace" : "<br>Fight");
@@ -407,19 +406,19 @@ gameManager = function () {
             }
             if (!flip) {
                 countcolors.push(this.snakesonfield[i].headColor);
-                
+
             };
             flip = false;
         }; if (this.snakesonfield.length > this.maxsSnakeNumber && countcolors.length < 2) {
             document.getElementById('rezultPlace').innerHTML = "Game Over<br>" + this.eaten + ((this.fight === 1) ? "<br>Peace" : "<br>Fight");
-            let alerttext = "Game over! On game field "+ this.maxsSnakeNumber +" or more snakes with one color, and no snakes with other color.";
+            let alerttext = "Game over! On game field " + this.maxsSnakeNumber + " or more snakes with one color, and no snakes with other color.";
             alert(alerttext);
             return true;
         }
         return false;
     };
 
-    this.changedirection = function (lv, fv, rv){
+    this.changedirection = function (lv, fv, rv) {
         if (lv === 0 && fv === 0 && rv === 0) {
             return (Math.floor(Math.random() * 3) - 1);
         } else if (lv > fv && lv === rv) {
@@ -427,23 +426,24 @@ gameManager = function () {
             if (variationofturn === 0) {
                 return - 1;
             } else {
-                return  1;}
+                return 1;
+            }
         } else
-        if (fv > lv && fv == rv) {
-            return Math.floor(Math.random() * 2);
-        }  else
-        if (fv > rv && fv == lv) {
-            return -Math.floor(Math.random() * 2);
-        } else
-        if (fv > lv && fv > rv) {
-            return 0;
-        } else
-        if (lv > fv && lv > rv) {
-            return - 1;
-        } else
-        if (rv > fv && rv > lv) {
-            return 1;
-        };
+            if (fv > lv && fv == rv) {
+                return Math.floor(Math.random() * 2);
+            } else
+                if (fv > rv && fv == lv) {
+                    return -Math.floor(Math.random() * 2);
+                } else
+                    if (fv > lv && fv > rv) {
+                        return 0;
+                    } else
+                        if (lv > fv && lv > rv) {
+                            return - 1;
+                        } else
+                            if (rv > fv && rv > lv) {
+                                return 1;
+                            };
     };
 
     this.checkeyevalue = function (xc, yc, nc) {
@@ -463,8 +463,8 @@ gameManager = function () {
 
     this.checkandaddsnakes = function () {
         while (this.snakesonfield.length < this.startQuantityOfSnakes) {
-            let fillColor = 'rgb(' + (1+Math.floor(Math.random() * 255)) + ',' + (1+Math.floor(Math.random() * 255)) + ',' + (1+Math.floor(Math.random() * 255)) + ')';
-//            let fillColor = 'rgb(' + 1 + ',' + 200 + ',' + 1 + ')';
+            let fillColor = 'rgb(' + (1 + Math.floor(Math.random() * 255)) + ',' + (1 + Math.floor(Math.random() * 255)) + ',' + (1 + Math.floor(Math.random() * 255)) + ')';
+            //            let fillColor = 'rgb(' + 1 + ',' + 200 + ',' + 1 + ')';
 
             let x = 0;
             let y = 0;
@@ -502,7 +502,7 @@ gameManager = function () {
                     if (x === x1 && y === y1 && this.snakesonfield[numofsnaketocompare].headColor != this.snakesonfield[i].headColor) return true;
                 };
             };
-        }; 
+        };
         return false;
     };
 
@@ -515,7 +515,7 @@ gameManager = function () {
                     if (x === x1 && y === y1 && this.snakesonfield[numofsnaketocompare].headColor === this.snakesonfield[i].headColor) return true;
                 };
             };
-        }; 
+        };
         return false;
     };
 
@@ -535,7 +535,7 @@ gameManager = function () {
             let x1 = this.poison.poisonvolume[i].getX();
             let y1 = this.poison.poisonvolume[i].getY();
             if (x === x1 && y === y1) return true;
-        }; 
+        };
         return false;
     };
 
@@ -566,12 +566,12 @@ gameManager = function () {
         };
     };
 
-    this.snakepregnantwillborn = function(pregnantsnake, numberofpregnantsnake){
-        let snaketemptobeborn= new SnakeObject(Math.floor(pregnantsnake.snakeBody.length/2)+1, pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length-1)].getX(), pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length-1)].getY(), ((pregnantsnake.snakeDirection+2+4)%4), pregnantsnake.headColor, pregnantsnake.cellBodysize);
-        snaketemptobeborn.snakeBody = pregnantsnake.snakeBody.slice(this.startSnakeLength,-1);
+    this.snakepregnantwillborn = function (pregnantsnake, numberofpregnantsnake) {
+        let snaketemptobeborn = new SnakeObject(Math.floor(pregnantsnake.snakeBody.length / 2) + 1, pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length - 1)].getX(), pregnantsnake.snakeBody[(pregnantsnake.snakeBody.length - 1)].getY(), ((pregnantsnake.snakeDirection + 2 + 4) % 4), pregnantsnake.headColor, pregnantsnake.cellBodysize);
+        snaketemptobeborn.snakeBody = pregnantsnake.snakeBody.slice(this.startSnakeLength, -1);
         snaketemptobeborn.snakeBody.reverse();
         this.snakesonfield.push(snaketemptobeborn);
-        pregnantsnake.snakeBody.splice(this.startSnakeLength, (pregnantsnake.snakeBody.length-this.startSnakeLength-1));
+        pregnantsnake.snakeBody.splice(this.startSnakeLength, (pregnantsnake.snakeBody.length - this.startSnakeLength - 1));
     };
 
     this.startfight = function () {
@@ -622,9 +622,9 @@ gameManager = function () {
                 this.snakesonfield[ii].snakeBody.unshift(new PointOfField(x1, y1, this.snakesonfield[ii].headColor));
                 if (this.isFood(x1, y1)) {
                     this.eatFood(x1, y1);
-                    if (this.snakesonfield[ii].snakeBody.length>=this.maxSnakeLength){
+                    if (this.snakesonfield[ii].snakeBody.length >= this.maxSnakeLength) {
                         this.snakesonfield[ii].snakeBody = this.snakesonfield[ii].snakeBody.slice(0, -1);
-                        this.snakepregnantwillborn( this.snakesonfield[ii] ,ii);
+                        this.snakepregnantwillborn(this.snakesonfield[ii], ii);
                     };
                 } else {
                     this.snakesonfield[ii].snakeBody = this.snakesonfield[ii].snakeBody.slice(0, -1);
@@ -643,7 +643,7 @@ gameManager = function () {
                 this.fight = -1;
             } else this.fight = 1;
             this.renderpicture();
-            this.gameover= this.isgameover() ;
+            this.gameover = this.isgameover();
         };
     };
 
