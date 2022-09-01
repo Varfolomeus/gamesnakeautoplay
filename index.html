@@ -1,53 +1,53 @@
-<html class="site-background">
-<title>
-    :[Snake autopilot game]
-</title>
-<head>
-    <link rel="stylesheet" href="css\index.css">
-    <link rel="icon" type="image/x-icon" href="./images/snico.ico" />
-</head>
+    <html class="site-background">
+    <title>
+        :[Snake autopilot game]
+    </title>
+    <head>
+        <link rel="stylesheet" href="css\index.css">
+        <link rel="icon" type="image/x-icon" href="./images/snico.ico" />
+    </head>
 
-<body>
-    <div class="my-calculator">
-        <div class="hello-world">
-            <div>
-                <h1>
-                    <span class='red'>Hello </span> <span class='green'>world!</span>
-                    <p>
-                        it's a new selfplay Snake Game
-                    </p>
-                </h1>
+    <body>
+        <div class="my-calculator">
+            <div class="hello-world">
+                <div>
+                    <h1>
+                        <span class='red'>Hello </span> <span class='green'>world!</span>
+                        <p>
+                            it's a new selfplay Snake Game
+                        </p>
+                    </h1>
+                </div>
             </div>
-        </div>
-        <img src="https://itvdn.blob.core.windows.net/articles-new/964ab097-af9c-473f-87de-698ac9503670-small.jpg"
-            class="icon" />
+            <img src="./images/jslabel.jpg"
+                class="icon" />
 
-        <div class="whitebackgroundcolor" id="ppp6565">Current time </div>
-        <div class="block-canvas">
-            <canvas id="c1" width="1200" height="600"></canvas>
-        </div>
-        <div class="operations-block">
-            <div class='result-calculation whitebackgroundcolor'>Amount of food eaten by snakes</div>
-            <div class='result-calculation whitebackgroundcolor' id="rezultPlace">Press<br>Start</div>
-            <div class="operation-block">
-                <button class="operation-buttons" id="buttonPlus">Start</button>
-                <button class="operation-buttons" id="buttonMinus">Pause</button>
-                <button class="operation-buttons" id="buttonMultiply">Play</button>
-                <button class="operation-buttons" id="buttonDivide">Step</button>
+            <div class="whitebackgroundcolor" id="ppp6565">Current time </div>
+            <div class="block-canvas">
+                <canvas id="c1" width="1200" height="600"></canvas>
+            </div>
+            <div class="operations-block">
+                <div class='result-calculation whitebackgroundcolor'>Amount of food eaten by snakes</div>
+                <div class='result-calculation whitebackgroundcolor' id="rezultPlace">Press<br>Start</div>
+                <div class="operation-block">
+                    <button class="operation-buttons" id="buttonPlus">Start</button>
+                    <button class="operation-buttons" id="buttonMinus">Pause</button>
+                    <button class="operation-buttons" id="buttonMultiply">Play</button>
+                    <button class="operation-buttons" id="buttonDivide">Step</button>
+                </div>
+            </div>
+            <div class="inputs-block">
+                <div class="input-block">
+                    <label for="">Snakes on start</label>
+                    <input id="input1" value="2" type="number" step="10">
+                </div>
+                <div class="input-block">
+                    <label for="">Game speed</label>
+                    <input id="input2" value="200" type="number" step="10">
+                </div>
             </div>
         </div>
-        <div class="inputs-block">
-            <div class="input-block">
-                <label for="">Snakes on start</label>
-                <input id="input1" value="2" type="number" step="10">
-            </div>
-            <div class="input-block">
-                <label for="">Game speed</label>
-                <input id="input2" value="200" type="number" step="10">
-            </div>
-        </div>
-    </div>
-    <script src="js\index.js"></script>
-</body>
+        <script src="js\index.js"></script>
+    </body>
 
-</html>
+    </html>
