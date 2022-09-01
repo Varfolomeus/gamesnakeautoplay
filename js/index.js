@@ -22,19 +22,25 @@ for (let i = 0; i < operationButtons.length; i++) {
 // functions to perform manipulations
 function onButtonclick(eventObject) {
     var clickdElement = eventObject.currentTarget;
-    var whatoperation = clickdElement.innerHTML;
+    var whatoperation = clickdElement.id;
     gameControls(whatoperation);
 }
 function gameControls(operation) {
 
     switch (operation) {
-        case "Start": that.gameStart(); break;
-        case "Pause": that.gameover = !that.gameover; break;
-        case "Play": that.continiousgame(); break;
-        case "Step": that.move(); break;
+        case "buttonPlus": let NewSnakeGame = new gameManager(); that.gameStart(); break;
+        case "buttonMinus": that.gameover = !that.gameover; break;
+        case "buttonMultiply": that.continiousgame(); break;
+        case "buttonDivide": that.move(); break;
     }
     //    document.getElementById("rezultPlace").innerHTML = rezult;
 }
+
+if (localStorage.hasOwnProperty("genestotransfer")) {
+    let transformdata = JSON.parse(localStorage.getItem("genestotransfer"));
+    input1.value = transformdata.input1;
+    input2.value = transformdata.input2;
+};
 //-----------canvas-------------------
 var canvas = document.getElementById("c1");
 var ctx = canvas.getContext('2d');
@@ -360,6 +366,7 @@ gameManager = function () {
         this.checkandaddsnakes();
         this.checkandaddconsumables();
         this.renderpicture();
+        document.querySelector("#buttonPlus").innerHTML="Restart";
     };
 
     this.renderpicture = function () {
@@ -433,10 +440,12 @@ gameManager = function () {
             //           document.getElementById('genes').innerText = this.genestotransfer;
             let objecttotransfer = {
                 genestotransfer: this.genestotransfer,
+                input1: input1.value,
+                input2: input2.value,
             };
             localStorage.clear("genestotransfer");
             localStorage.setItem("genestotransfer", JSON.stringify(objecttotransfer));
-            let alerttext = "Game over! On game field " + this.maxsSnakeNumber + " or more snakes with one color, and no snakes with other color.";
+            let alerttext = `Game over! On game field ${this.snakesonfield.length} or maybe more snakes with one color, and no snakes with other color.`;
             alert(alerttext);
             return true;
         }
@@ -695,5 +704,3 @@ gameManager = function () {
     };
     that = this;
 };
-
-let NewSnakeGame = new gameManager();
