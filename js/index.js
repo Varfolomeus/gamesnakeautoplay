@@ -37,10 +37,15 @@ function gameControls(operation) {
 }
 
 if (localStorage.hasOwnProperty("genestotransfer")) {
-    let transformdata = JSON.parse(localStorage.getItem("genestotransfer"));
-    input1.value = transformdata.input1;
-    input2.value = transformdata.input2;
+    let transferdata = JSON.parse(localStorage.getItem("genestotransfer"));
+    if (transferdata.hasOwnProperty("input1")) {
+        input1.value = transferdata.input1;
+    };
+    if (transferdata.hasOwnProperty("input2")) {
+        input2.value = transferdata.input2;
+    };
 };
+
 //-----------canvas-------------------
 var canvas = document.getElementById("c1");
 var ctx = canvas.getContext('2d');
