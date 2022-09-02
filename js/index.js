@@ -3,19 +3,21 @@ mytimeshforid("ppp6565");
 function mytimeshforid(wheretoshow) {
     var show_time = document.getElementById(wheretoshow);
     var current_date = new Date();
-    var pretty_time = `${String(current_date.getHours()).padStart(2, "0")}:${String(current_date.getMinutes()).padStart(2, "0")}`
+    var pretty_time = `${String(current_date.getDate()).padStart(2, "0")}.${String(current_date.getMonth()+1).padStart(2, "0")}.${String(current_date.getFullYear())}-${String(current_date.getHours()).padStart(2, "0")}.${String(current_date.getMinutes()).padStart(2, "0")}`
     show_time.innerHTML = show_time.innerHTML + pretty_time;
 }
 /* for (let uuu = 0 ; uuu< 50 ; uuu++){
     console.log((3+Math.floor((Math.floor(Math.random()*2))+4))% 4);
 }
  */
-
+var loadedJSONoject=null;
+var isloadedJSONoject=false;
 // list of buttons event listeners
 var operationButtons = document.getElementsByClassName("operation-buttons");
 // access to inout fields on web page
 var input1 = document.getElementById("input1");
 var input2 = document.getElementById("input2");
+var inputGenes = document.getElementById('filewithgenes');
 // bodies of functions listeners
 for (let i = 0; i < operationButtons.length; i++) {
     operationButtons[i].addEventListener("click", onButtonclick);
@@ -33,6 +35,7 @@ function gameControls(operation) {
         case "buttonMinus": that.gameover = !that.gameover; break;
         case "buttonMultiply": that.continiousgame(); break;
         case "buttonDivide": that.move(); break;
+        case "readfile": readingFileWithGenes(); break;
     }
     //    document.getElementById("rezultPlace").innerHTML = rezult;
 }
@@ -47,6 +50,41 @@ if (localStorage.hasOwnProperty("genestotransfer")) {
     };
 };
 
+function readingFileWithGenes() {
+    var file, fr;
+
+    if (typeof window.FileReader !== 'function') {
+        alert("The file API isn't supported on this browser yet.");
+        return;
+    }
+    if (!inputGenes) {
+        alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!inputGenes.files) {
+        alert("This browser doesn't seem to support the 'files' property of file inputs.");
+    }
+    else if (!inputGenes.files[0]) {
+        alert("Please select a file before clicking 'Load'");
+    }
+    else {
+        file = inputGenes.files[0];
+        fr = new FileReader();
+        fr.onload = receivedText;
+        fr.readAsText(file);
+    }
+
+    function receivedText(e) {
+        let lines = e.target.result;
+        loadedJSONoject = JSON.parse(lines);
+        if (loadedJSONoject.hasOwnProperty("input1")) {
+            input1.value = loadedJSONoject.input1;
+        };
+        if (loadedJSONoject.hasOwnProperty("input2")) {
+            input2.value = loadedJSONoject.input2;
+        }
+        isloadedJSONoject = true;
+    }
+}
 //-----------canvas-------------------
 var canvas = document.getElementById("c1");
 var ctx = canvas.getContext('2d');
@@ -195,8 +233,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
-                }
-            }
+                };
+            };
             //calculating eyevalues - right eye for up direction
             ii = 0;
             for (let i = 1; i < that.eyeDepth; i++) {
@@ -206,12 +244,12 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     yn1 = (y1 + that.step * j + 1 + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
-                }
-            }
+                };
+            };
             Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
-            }
+            };
             Snaketocalkdir.leftEyevalue = 0;
             Snaketocalkdir.frontEyevalue = 0;
             Snaketocalkdir.rightEyevalue = 0;
@@ -227,8 +265,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     yn1 = (y1 - that.step * i + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
-                }
-            }
+                };
+            };
             //calculating eyevalues - front eye for right direction
             ii = 0;
             for (let i = 1; i < that.eyeDepth; i++) {
@@ -239,8 +277,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
 
                     ii++;
-                }
-            }
+                };
+            };
             //calculating eyevalues - right eye for right direction
             ii = 0;
             for (let i = 1; i < that.eyeDepth; i++) {
@@ -250,12 +288,12 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
-                }
-            }
+                };
+            };
             Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
-            }
+            };
             Snaketocalkdir.leftEyevalue = 0;
             Snaketocalkdir.frontEyevalue = 0;
             Snaketocalkdir.rightEyevalue = 0;
@@ -271,8 +309,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     yn1 = (y1 + that.step * j - 1 + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.leftEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
-                }
-            }
+                };
+            };
             //calculating eyevalues - front eye for down direction
             ii = 0;
             for (let i = 1; i < that.eyeDepth; i++) {
@@ -282,8 +320,8 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     yn1 = (y1 + that.step * i + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.frontEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
                     ii++;
-                }
-            }
+                };
+            };
             //calculating eyevalues - right eye for down direction
             ii = 0;
             for (let i = 1; i < that.eyeDepth; i++) {
@@ -292,14 +330,13 @@ SnakeObject = function (snlength, snheadX, snheadY, snDir, colorofsnakehead, cel
                     xn1 = (x1 - that.step * i + that.gameWidth) % that.gameWidth;
                     yn1 = (y1 - that.step * j - 1 + that.gameHeight) % that.gameHeight;
                     Snaketocalkdir.rightEyevalue += eyevalueforcalculation * that.checkeyevalue(xn1, yn1, numofsntocalcdir);
-
                     ii++;
-                }
-            }
+                };
+            };
             Snaketocalkdir.snakeDirection = (Snaketocalkdir.snakeDirection + that.changedirection(Snaketocalkdir.leftEyevalue, Snaketocalkdir.frontEyevalue, Snaketocalkdir.rightEyevalue) + 4) % 4;
             if (that.showmessages) {
                 console.log("Snake: " + numofsntocalcdir + " Left Eye: " + Snaketocalkdir.leftEyevalue + " Front Eye: " + Snaketocalkdir.frontEyevalue + " Right Eye: " + Snaketocalkdir.rightEyevalue + " Direction: " + Snaketocalkdir.snakeDirection);
-            }
+            };
             Snaketocalkdir.leftEyevalue = 0;
             Snaketocalkdir.frontEyevalue = 0;
             Snaketocalkdir.rightEyevalue = 0;
@@ -335,6 +372,7 @@ gameManager = function () {
     this.gamepause = 100;
     this.eyeDeltaWidth = 2;
     this.savegenes = 5;
+    this.readfromFile = false;
     this.stepEvolution = 0.02;
     this.foodimageurl = "./images/food.png";
     this.poisonimageurl = "./images/poison.png";
@@ -360,12 +398,18 @@ gameManager = function () {
     [0.707, 1.0, 0.707, 0.353, 0.447, 0.5, 0.447, 0.353, 0.235, 0.277, 0.316, 0.333, 0.316, 0.277, 0.235, 0.176, 0.2, 0.223, 0.242, 0.25, 0.242, 0.223, 0.2, 0.176, 0.141, 0.156, 0.171, 0.185, 0.196, 0.2, 0.196, 0.185, 0.171, 0.156, 0.141, 0.117, 0.128, 0.138, 0.149, 0.158, 0.164, 0.166, 0.164, 0.158, 0.149, 0.138, 0.128, 0.117, 0.101, 0.108, 0.116, 0.124, 0.131, 0.137, 0.141, 0.142, 0.141, 0.137, 0.131, 0.124, 0.116, 0.108, 0.101, 0.088, 0.094, 0.1, 0.105, 0.111, 0.117, 0.121, 0.124, 0.125, 0.124, 0.121, 0.117, 0.111, 0.105, 0.1, 0.094, 0.088, 0.078, 0.083, 0.087, 0.092, 0.097, 0.101, 0.105, 0.108, 0.11, 0.111, 0.11, 0.108, 0.105, 0.101, 0.097, 0.092, 0.087, 0.083, 0.078, 0.07, 0.074, 0.078, 0.081, 0.085, 0.089, 0.092, 0.095, 0.098, 0.099, 0.1, 0.099, 0.098, 0.095, 0.092, 0.089, 0.085, 0.081, 0.078, 0.074, 0.07, 0.064, 0.067, 0.07, 0.073, 0.076, 0.079, 0.082, 0.085, 0.087, 0.089, 0.09, 0.09, 0.09, 0.089, 0.087, 0.085, 0.082, 0.079, 0.076, 0.073, 0.07, 0.067, 0.064, 0.058, 0.061, 0.064, 0.066, 0.069, 0.071, 0.074, 0.076, 0.079, 0.08, 0.082, 0.083, 0.083, 0.083, 0.082, 0.08, 0.079, 0.076, 0.074, 0.071, 0.069, 0.066, 0.064, 0.061, 0.058, 0.054, 0.056, 0.058, 0.06, 0.063, 0.065, 0.067, 0.069, 0.071, 0.073, 0.074, 0.076, 0.076, 0.076, 0.076, 0.076, 0.074, 0.073, 0.071, 0.069, 0.067, 0.065, 0.063, 0.06, 0.058, 0.056, 0.054, 0.05, 0.052, 0.054, 0.056, 0.058, 0.06, 0.062, 0.063, 0.065, 0.067, 0.068, 0.069, 0.07, 0.071, 0.071, 0.071, 0.07, 0.069, 0.068, 0.067, 0.065, 0.063, 0.062, 0.06, 0.058, 0.056, 0.054, 0.052, 0.05, 0.047, 0.048, 0.05, 0.052, 0.053, 0.055, 0.057, 0.058, 0.06, 0.061, 0.063, 0.064, 0.065, 0.066, 0.066, 0.066, 0.066, 0.066, 0.065, 0.064, 0.063, 0.061, 0.06, 0.058, 0.057, 0.055, 0.053, 0.052, 0.05, 0.048, 0.047]];
 
     this.gameStart = function () {
-        if (localStorage.hasOwnProperty("genestotransfer")) {
+        if (localStorage.hasOwnProperty("genestotransfer") && !isloadedJSONoject) {
             this.genesfromtramsfer = JSON.parse(localStorage.getItem("genestotransfer"));
             this.eyevalues = [];
             this.eyevalues = this.genesfromtramsfer.genestotransfer;
             if (this.genesfromtramsfer.hasOwnProperty("mutations")) {
                 this.mutationstotransfer = this.genesfromtramsfer.mutations;
+            };
+        } else {
+            this.eyevalues = [];
+            this.eyevalues = loadedJSONoject.genestotransfer;
+            if (loadedJSONoject.hasOwnProperty("mutations")) {
+                this.mutationstotransfer = loadedJSONoject.mutations;
             };
         };
         document.getElementById('rezultPlace').innerHTML = "0 <br> Peace"
@@ -399,8 +443,8 @@ gameManager = function () {
                 ctx.beginPath();
                 ctx.arc(x1, y1, radiusofSnakebodysegment, 0, 2 * Math.PI, true);
                 ctx.fill();
-            }
-        }
+            };
+        };
         //food
         for (let i = 0; i < this.food.foodvolume.length; i++) {
             let x1 = this.food.foodvolume[i].getX() * this.food.radiusoffoodportion;
@@ -460,12 +504,24 @@ gameManager = function () {
             };
             localStorage.clear("genestotransfer");
             localStorage.setItem("genestotransfer", JSON.stringify(objecttotransfer));
+            let current_date = new Date();
+            let filenametoexport = "genes "+`${String(current_date.getDate()).padStart(2, "0")}.${String(current_date.getMonth()+1).padStart(2, "0")}.${String(current_date.getFullYear())}-${String(current_date.getHours()).padStart(2, "0")}.${String(current_date.getMinutes()).padStart(2, "0")}`;
+            this.downloadObjectAsJson(objecttotransfer, filenametoexport);
             let alerttext = `Game over! On game field ${this.snakesonfield.length} or maybe more snakes with one color, and no snakes with other color.`;
             alert(alerttext);
             return true;
         }
         return false;
     };
+    this.downloadObjectAsJson = function (exportObj, exportName){
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+        let downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href",     dataStr);
+        downloadAnchorNode.setAttribute("download", exportName + ".json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+      }
 
     this.changedirection = function (lv, fv, rv) {
         if (lv === 0 && fv === 0 && rv === 0) {
