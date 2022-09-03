@@ -87,9 +87,9 @@ li {
 } */
 
 
-#ppp6565 {
+#ppp6565, #linktodownload {
     width: 250px;
-    margin: 0 auto;
+    margin: 10px auto;
     color: rgb(85, 8, 76);
     font-size: 30px;
     border: brown 1px solid;
@@ -135,4 +135,3 @@ li {
     margin: 10px auto;
     background: url('../images/setka.png') 
 }
-
