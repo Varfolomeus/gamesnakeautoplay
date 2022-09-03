@@ -70,6 +70,12 @@ li {
     padding: 5px;
     border-radius: 15px;
 }
+.inputs-block .input-block button{
+    width: 160px;
+    font-size: 25px;
+    padding: 5px;
+    border-radius: 15px;
+}
 /* .current-time {
     width: 200px;
     text-align: center;
@@ -96,7 +102,7 @@ li {
 }
 
 .my-calculator {
-    width: 1300px;
+    width: 1220px;
     background-color: azure;
     text-align: center;
     margin: 0 auto;
@@ -109,7 +115,7 @@ li {
     width: 80px;
     font-size: 20px;
     height: 40px;
-    margin: 20px;
+    margin: 10px;
     border-radius: 10px;
 
 }
@@ -124,7 +130,9 @@ li {
 }
 #c1{
     border: 5px solid rgb(60, 116, 195);
-    margin: 40px auto;
+    widows: 1200px;
+    height: 600px;
+    margin: 10px auto;
     background: url('../images/setka.png') 
 }
 
