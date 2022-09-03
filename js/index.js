@@ -405,7 +405,7 @@ gameManager = function () {
             if (this.genesfromtramsfer.hasOwnProperty("mutations")) {
                 this.mutationstotransfer = this.genesfromtramsfer.mutations;
             };
-        } else {
+        } else if (localStorage.hasOwnProperty("genestotransfer")) {
             this.eyevalues = [];
             this.eyevalues = loadedJSONoject.genestotransfer;
             if (loadedJSONoject.hasOwnProperty("mutations")) {
