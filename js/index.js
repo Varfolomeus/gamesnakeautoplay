@@ -412,6 +412,7 @@ gameManager = function () {
                 this.mutationstotransfer = this.genesfromtramsfer.mutations;
             };
         };
+        document.querySelector("#filetoload").innerHTML="";
         document.getElementById('rezultPlace').innerHTML = "0 <br> Peace"
         this.startQuantityOfSnakes = Number(document.getElementById('input1').value);
         this.gamepause = (Math.floor(10000 / Number(document.getElementById('input2').value)) < 20) ? 20 : Math.floor(10000 / Number(document.getElementById('input2').value));
@@ -517,10 +518,15 @@ gameManager = function () {
         let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href",     dataStr);
+        downloadAnchorNode.setAttribute("id",     "linktodownload");
         downloadAnchorNode.setAttribute("download", exportName + ".genes");
-        document.body.appendChild(downloadAnchorNode); // required for firefox
-        downloadAnchorNode.click();
-        downloadAnchorNode.remove();
+//        document.querySelector("#filetoload").innerHTML=downloadAnchorNode;
+//        document.querySelector("#filetoload").appendChild(downloadAnchorNode);
+        document.querySelector("#filetoload").appendChild(downloadAnchorNode); // required for firefox
+        document.querySelector("#linktodownload").innerText="Download genes file";
+        isloadedJSONoject=false;
+//        downloadAnchorNode.click();
+//        downloadAnchorNode.remove();
       }
 
     this.changedirection = function (lv, fv, rv) {
