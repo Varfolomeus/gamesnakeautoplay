@@ -519,7 +519,7 @@ gameManager = function () {
         let downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href",     dataStr);
         downloadAnchorNode.setAttribute("id",     "linktodownload");
-        downloadAnchorNode.setAttribute("class",     "input-block");
+        downloadAnchorNode.setAttribute("class",     "input-block download-link");
         downloadAnchorNode.setAttribute("download", exportName + ".genes");
 //        document.querySelector("#filetoload").innerHTML=downloadAnchorNode;
 //        document.querySelector("#filetoload").appendChild(downloadAnchorNode);
