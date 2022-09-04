@@ -100,7 +100,6 @@ li {
     background-color: whitesmoke;
 
 }
-
 .my-calculator {
     width: 1220px;
     background-color: azure;
@@ -110,23 +109,18 @@ li {
     border: 1px solid rgb(105, 135, 85);
     border-radius: 25px;
 }
-
 .my-calculator .operations-block .operation-block button {
     width: 80px;
     font-size: 20px;
     height: 40px;
     margin: 10px;
     border-radius: 10px;
-
 }
-
 .whitebackgroundcolor{
     background-color: whitesmoke;
-
 }
 .block-canvas{
     text-align: center;
-
 }
 #c1{
     border: 5px solid rgb(60, 116, 195);
@@ -134,4 +128,10 @@ li {
     height: 600px;
     margin: 10px auto;
     background: url('../images/setka.png') 
+}
+.block-canvas{
+    text-align: center;
+}
+.download-link{
+    background-color: gold;
 }
