@@ -1,137 +1,174 @@
 .icon {
-    width: 150px;
-    padding: 15px;
+  width: 150px;
+  padding: 15px;
 }
 
 input {
-    padding: 9px;
+  padding: 9px;
 }
 
 p {
-    color: rgb(31, 69, 101);
+  color: rgb(31, 69, 101);
 }
 
 li {
-    font-size: 30px;
-    border: brown 1px solid;
-    padding: 6px;
+  font-size: 30px;
+  border: brown 1px solid;
+  padding: 6px;
 }
 
 /* .site-background {
-    background-color: darkcyan;
+		background-color: darkcyan;
 } */
 
 .red {
-    text-align: center;
-    color: red;
-    display: inline-block;
+  text-align: center;
+  color: red;
+  display: inline-block;
 }
 
 .my-calculator .result-calculation {
-    width: 250px;
-    text-align: center;
-    margin: 20px auto;
-    padding: 15px;
-    color: rgb(85, 8, 76);
-    font-size: 30px;
-    border: brown 1px solid;
-    border-radius: 15px;
-
+  width: 250px;
+  text-align: center;
+  margin: 20px auto;
+  padding: 15px;
+  color: rgb(85, 8, 76);
+  font-size: 30px;
+  border: brown 1px solid;
+  border-radius: 15px;
 }
 
 .green {
-    text-align: center;
-    color: rgb(85, 8, 76);
+  text-align: center;
+  color: rgb(85, 8, 76);
 }
 
 .hello-world h1 {
-    width: 300px;
-    font-size: 50px;
-    text-align: center;
-    margin: 0 auto;
+  width: 300px;
+  font-size: 50px;
+  text-align: center;
+  margin: 0 auto;
 }
 
-.inputs-block .input-block label{
-    color: rgb(85, 8, 76);
-    font-size: 30px;
-    display: block;
-    padding: 5px;
+.inputs-block .input-block label {
+  color: rgb(85, 8, 76);
+  font-size: 30px;
+  display: block;
+  padding: 5px;
 }
 
 .inputs-block .input-block {
-    width: 160px;
-    display: inline-block;
-    padding: 10px;
+  width: 160px;
+  display: inline-block;
+  padding: 10px;
 }
 
-.inputs-block .input-block input{
-    width: 160px;
-    font-size: 25px;
-    padding: 5px;
-    border-radius: 15px;
+.inputs-block .input-block input {
+  width: 160px;
+  font-size: 25px;
+  padding: 5px;
+  border-radius: 15px;
 }
-.inputs-block .input-block button{
-    width: 160px;
-    font-size: 25px;
-    padding: 5px;
-    border-radius: 15px;
+
+.inputs-block .input-block button {
+  width: 160px;
+  font-size: 25px;
+  padding: 5px;
+  border-radius: 15px;
 }
+
 /* .current-time {
-    width: 200px;
-    text-align: center;
-    background-color: azure;
-    color: red;
-    font-size: 30px;
-    border: brown 1px solid;
-    border-radius: 15px;
+		width: 200px;
+		text-align: center;
+		background-color: azure;
+		color: red;
+		font-size: 30px;
+		border: brown 1px solid;
+		border-radius: 15px;
 } */
 
-
-#ppp6565, #linktodownload {
-    width: 250px;
-    margin: 10px auto;
-    color: rgb(85, 8, 76);
-    font-size: 30px;
-    border: brown 1px solid;
-    padding: 15px;
-    border-radius: 15px;
+#ppp6565,
+#linktodownload {
+  width: 250px;
+  margin: 10px auto;
+  color: rgb(85, 8, 76);
+  font-size: 30px;
+  border: brown 1px solid;
+  padding: 15px;
+  border-radius: 15px;
 }
-.whitebackgroundcolor{
-    background-color: whitesmoke;
 
-}
 .my-calculator {
-    width: 1220px;
-    background-color: azure;
-    text-align: center;
-    margin: 0 auto;
-    padding: 10px;
-    border: 1px solid rgb(105, 135, 85);
-    border-radius: 25px;
+  width: 1220px;
+  background-color: azure;
+  text-align: center;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid rgb(105, 135, 85);
+  border-radius: 25px;
 }
+
+.file-uploader__upload-button {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-uploader__custom-button {
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: gold;
+}
+
+.operation-buttons {
+  background-color: aquamarine;
+}
+
+.operation-buttons:hover {
+  background-color: rgb(177, 230, 212);
+}
+
+.operation-buttons:active {
+  background-color: rgb(95, 116, 109);
+}
+
+.file-uploader__custom-button:hover {
+
+  background-color: rgb(231, 213, 106);
+}
+
 .my-calculator .operations-block .operation-block button {
-    width: 80px;
-    font-size: 20px;
-    height: 40px;
-    margin: 10px;
-    border-radius: 10px;
+  width: 80px;
+  font-size: 20px;
+  height: 40px;
+  margin: 10px;
+  border-radius: 10px;
 }
-.whitebackgroundcolor{
-    background-color: whitesmoke;
+
+.whitebackgroundcolor {
+  background-color: whitesmoke;
 }
-.block-canvas{
-    text-align: center;
+
+#c1 {
+  border: 5px solid rgb(60, 116, 195);
+  widows: 1200px;
+  height: 600px;
+  border-radius: 8px;
+  margin: 10px auto;
+  background: url('../images/setka.png');
 }
-#c1{
-    border: 5px solid rgb(60, 116, 195);
-    widows: 1200px;
-    height: 600px;
-    margin: 10px auto;
-    background: url('../images/setka.png') 
+
+.block-canvas {
+  text-align: center;
+
 }
-.block-canvas{
-    text-align: center;
+
+.download-link {
+  background-color: gold;
 }
-.download-link{
-    background-color: gold;
+
+.download-link:hover {
+  background-color: rgb(231, 213, 106);
 }
